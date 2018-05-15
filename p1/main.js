@@ -1,38 +1,28 @@
-// Goal - Toggle the visibility of passwords
+// Login password fields
+const pwEle = document.querySelector('#password')
+const showLoginPwEle = document.querySelector('#show-passwords')
 
-// 1. Toggle visibility of the 'Login' form
-// 2. Toggle visibility of the 'Update Password' form
-// 2a. Show password should toggle both password fields (current & new)
-// A way to listen for when the checkbox is checked or unchecked.
-// A way to get password fields and change their type from password to text (or vice-versa).
+// Update password fields
+const updatePwEle = Array.from(document.querySelectorAll('[id$="-pw"]'))
+const showUpdatePwEle = document.querySelector('#show-password')
 
-const elemPw = document.querySelector('#password')
-const elemToggleLoginPw = document.querySelector('#show-passwords')
+// Test passwords populated so I don't get injured from repeated typing
+pwEle.value = "password"
+updatePwEle.forEach(function(pw){
+    pw.value = "password"
+})
 
-const elemCurrentPw = document.querySelector('#current-pw')
-const elemNewPw = document.querySelector('#new-pw')
-const elemToggleUpdatePw = document.querySelector('#show-password')
-
-const togglePw = function (chkbox, pw) {
+const showHidePw = function (chkbox, pw) {
     chkbox.addEventListener('change', function () {
-        if (chkbox.checked) {
-            pw.setAttribute('type', 'text')
+        if (Array.isArray(pw)) {
+            pw.forEach(function (pw) {
+                chkbox.checked ?  pw.setAttribute('type', 'text') : pw.setAttribute('type', 'password')
+            })
         } else {
-            pw.setAttribute('type', 'password') 
+            chkbox.checked ?  pw.setAttribute('type', 'text') : pw.setAttribute('type', 'password')
         }
     })
 }
 
-togglePw(elemToggleLoginPw, elemPw)
-
-togglePw(elemToggleLoginPw, elemPw)
-
-elemToggleUpdatePw.addEventListener('change', function () {
-    if (elemToggleUpdatePw.checked) {
-        elemCurrentPw.setAttribute('type', 'text')
-        elemNewPw.setAttribute('type', 'text')
-    } else {
-        elemCurrentPw.setAttribute('type', 'password')
-        elemNewPw.setAttribute('type', 'password')
-    }
-})
+showHidePw(showLoginPwEle, pwEle)
+showHidePw(showUpdatePwEle, updatePwEle)
