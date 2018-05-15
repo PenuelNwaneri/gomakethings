@@ -1,28 +1,17 @@
-// Login password fields
-const pwInput = document.querySelector('#password')
-const showPwCheckbox = document.querySelector('#show-passwords')
+// Using bubbling technique, look for clicks with a certain data-attribute.
+// Use the value of the data attribute to target specific elements - password input
+// Toggle password input field type from 'password' to 'text'
 
-// Update password fields
-const updatePwInputs = Array.from(document.querySelectorAll('[id$="-pw"]'))
-const showUpdatePwCheckbox = document.querySelector('#show-password')
-
-// Test passwords populated so I don't get injured from repeated typing
-pwInput.value = "password"
-updatePwInputs.forEach(function(pw){
-    pw.value = "password"
-})
-
-const showHidePw = function (checkbox, pw) {
-    checkbox.addEventListener('change', function () {
-        if (Array.isArray(pw)) {
-            pw.forEach(function (pw) {
-                checkbox.checked ?  pw.setAttribute('type', 'text') : pw.setAttribute('type', 'password')
+const showHidePw = function () {
+    document.addEventListener('click', function (event) {
+        var pwSelector = event.target.getAttribute('data-show-pw');
+        if (pwSelector) {
+            var passwords = Array.from(document.querySelectorAll(pwSelector));
+            passwords.forEach(function (pw) {
+                event.target.checked ?  pw.setAttribute('type', 'text') : pw.setAttribute('type', 'password');
             })
-        } else {
-            checkbox.checked ?  pw.setAttribute('type', 'text') : pw.setAttribute('type', 'password')
         }
-    })
+    });
 }
 
-showHidePw(showPwCheckbox, pwInput)
-showHidePw(showUpdatePwCheckbox, updatePwInputs)
+showHidePw();
