@@ -6,15 +6,15 @@
 // Convert 'C' to 'F'. (temp * 9/5) + 32
 // Update 'F' with the result.
 
-const farenheitEle = document.querySelector('#farenheit')
-const celciusEle = document.querySelector('#celcius')
+const farenheitInput = document.querySelector('#farenheit')
+const celciusInput = document.querySelector('#celcius')
 
-farenheitEle.addEventListener('input', function() {
-    const celcius = (farenheitEle.value - 32) * (5/9)
-    celciusEle.value = Math.round(celcius)
+farenheitInput.addEventListener('input', function() {
+    const celcius = (farenheitInput.value - 32) * (5/9)
+    celciusInput.value = Math.round(celcius)
 })
 
-celciusEle.addEventListener('input', function () {
-    const farenheit = (celciusEle.value * 9/5) + 32
-    farenheitEle.value = Math.round(farenheit)
+celciusInput.addEventListener('input', function () {
+    const farenheit = (celciusInput.value * 9/5) + 32
+    farenheitInput.value = Math.round(farenheit)
 })
