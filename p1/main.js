@@ -1,28 +1,28 @@
 // Login password fields
-const pwEle = document.querySelector('#password')
-const showLoginPwEle = document.querySelector('#show-passwords')
+const pwInput = document.querySelector('#password')
+const showPwCheckbox = document.querySelector('#show-passwords')
 
 // Update password fields
-const updatePwEle = Array.from(document.querySelectorAll('[id$="-pw"]'))
-const showUpdatePwEle = document.querySelector('#show-password')
+const updatePwInputs = Array.from(document.querySelectorAll('[id$="-pw"]'))
+const showUpdatePwCheckbox = document.querySelector('#show-password')
 
 // Test passwords populated so I don't get injured from repeated typing
-pwEle.value = "password"
-updatePwEle.forEach(function(pw){
+pwInput.value = "password"
+updatePwInputs.forEach(function(pw){
     pw.value = "password"
 })
 
-const showHidePw = function (chkbox, pw) {
-    chkbox.addEventListener('change', function () {
+const showHidePw = function (checkbox, pw) {
+    checkbox.addEventListener('change', function () {
         if (Array.isArray(pw)) {
             pw.forEach(function (pw) {
-                chkbox.checked ?  pw.setAttribute('type', 'text') : pw.setAttribute('type', 'password')
+                checkbox.checked ?  pw.setAttribute('type', 'text') : pw.setAttribute('type', 'password')
             })
         } else {
-            chkbox.checked ?  pw.setAttribute('type', 'text') : pw.setAttribute('type', 'password')
+            checkbox.checked ?  pw.setAttribute('type', 'text') : pw.setAttribute('type', 'password')
         }
     })
 }
 
-showHidePw(showLoginPwEle, pwEle)
-showHidePw(showUpdatePwEle, updatePwEle)
+showHidePw(showPwCheckbox, pwInput)
+showHidePw(showUpdatePwCheckbox, updatePwInputs)
