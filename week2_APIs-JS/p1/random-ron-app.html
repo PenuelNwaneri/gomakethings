@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>Random Ron Swanson</title>
+
+	<meta charset="utf-8">
+
+	<!-- Force latest available IE rendering engine and Chrome Frame (if installed) -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<!-- Mobile Screen Resizing -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<style type="text/css">
+		/**
+		 * Add box sizing to everything
+		 * @link http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+		 */
+		/* line 38, src/sass/components/_normalize.scss */
+		*,
+		*:before,
+		*:after {
+			box-sizing: border-box;
+		}
+
+		/**
+		 * Layout
+		 */
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+			font-size: 112.5%;
+			margin-left: auto;
+			margin-right: auto;
+			max-width: 40em;
+			width: 88%;
+		}
+
+		img {
+			height: auto;
+			max-width: 100%;
+		}
+
+		/**
+		 * Button Styles
+		 */
+		button {
+			background-color: #0088cc;
+			border: 1px solid #0088cc;
+			border-radius: 1px;
+			color: #ffffff;
+			display: inline-block;
+			font-size: 0.9375em;
+			font-weight: normal;
+			line-height: 1.2;
+			margin-right: 0.3125em;
+			margin-bottom: 0.3125em;
+			padding: 0.5em 0.6875em;
+		}
+
+		button:hover,
+		button:focus,
+		button:active {
+			background-color: #005580;
+			border-color: #005580;
+			color: #ffffff;
+			text-decoration: none;
+		}
+
+		/**
+		 * Blockquotes
+		 */
+		blockquote {
+			border-left: 0.25em solid #e5e5e5;
+			font-style: italic;
+			margin: 0 0 1.5625em;
+			padding-left: 1em;
+			padding-right: 1em;
+			quotes: none;
+		}
+
+		blockquote:before,
+		blockquote:after {
+			content: '';
+		}
+	</style>
+</head>
+<body>
+
+	<h1>Random Ron Swanson</h1>
+	<blockquote id="quote">This is a quote</blockquote>
+	<p><button id="quoteButton">More Ron</button></p>
+
+<script>
+var makeRequest = function (url, method, success, failure, always) {
+	// Make sure a URL and method were provided
+	if (!url || !method) return;
+
+	// Set up our HTTP request
+	var xhr = new XMLHttpRequest();
+
+	// Setup our listener to process completed requests
+	xhr.onload = function () {
+
+		// Process our return data
+		if (xhr.status >= 200 && xhr.status < 300) {
+			// Run the success callback
+			if (success && typeof success === 'function') {
+				success(JSON.parse(xhr.responseText), xhr);
+			}
+		} else {
+			// Run the failure callback
+			if (failure && typeof failure === 'function') {
+				failure(xhr);
+			}
+		}
+
+		if (always && typeof always === 'function') {
+			always(JSON.parse(xhr.responseText), xhr);
+		}
+
+	};
+
+	// Create and send a request
+	// Defaults to GET
+	xhr.open(method, url);
+	xhr.send();
+};
+
+// Get the quote and button elements
+var quoteElem = document.querySelector('#quote');
+var quoteButton = document.querySelector('#quoteButton');
+
+// When clicking on the button, use AJAX helper.
+quoteButton.addEventListener('click', function (e) {
+	// Get a quote & update the blockquote
+	makeRequest('http://ron-swanson-quotes.herokuapp.com/v2/quotes', 'GET', function (quote) {
+			var quoteText = quote[0];
+			quoteElem.textContent = quoteText
+	});
+	// Remove active state from button
+	quoteButton.blur()
+})
+
+</script>
+
+</body>
+</html>
