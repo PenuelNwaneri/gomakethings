@@ -26,7 +26,7 @@
 		/**
 		 * Layout
 		 */
-		body {
+		 body {
 			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 			font-size: 112.5%;
 			margin-left: auto;
@@ -34,11 +34,26 @@
 			max-width: 40em;
 			width: 88%;
 		}
-
-		p {
-			font-size: .9em;
-			color: grey;
+		h2, h3, h4, h5, h6 {
+			font-weight: normal;
+			padding-top: 1em;
 		}
+		li {
+			margin-bottom: 1em;
+		}
+		/**
+		 * Utilities
+		 */
+		.text-muted {
+			color: #808080;
+		}
+		.text-small {
+			font-size: 0.8em;
+		}
+		.title-case {
+			text-transform: capitalize;
+		}
+
 	</style>
 
 </head>
@@ -50,47 +65,86 @@
 <script src="helper.js"></script>
 <script>
 
+// Controller (input / variables)
+var app = document.querySelector('#app');
 var apiKey = '67efa90bc29e4925b6069f4ba9a5d926';
-var sections = ['world', 'technology', 'sports']
+var sections = ['world', 'technology', 'sports'];
+var newsCount = 3;
 
-sections.forEach( function(section) {
-	var nytUrl = `https://api.nytimes.com/svc/topstories/v2/${section}.json?api-key=${apiKey}`
-
-	// Create a header for each Section.
-	var sectionHeader = document.createElement('h2');
-	sectionHeader.textContent = `Section: ${section.toUpperCase()}`;
-
-	// Add Section to the main #app
-	var target = document.querySelector('#app');
-	target.append(sectionHeader);
-
-	// API call to NYT
-	makeRequest(nytUrl, 'GET', function (news) {
-
-		// News list for each Section
-		var newsDiv = document.createElement('div');
-		sectionHeader.after(newsDiv);
-
-		// Top 3 news from the NYT
-		for (var i=0; i<3; i++) {
-			// Create title w/ link
-			var title = document.createElement('h4');
-			var titleLink = document.createElement('a');
-			titleLink.href = news.results[i].url;
-			titleLink.textContent = news.results[i].title;
-			titleLink.setAttribute('target', '_blank');
-			title.append(titleLink);
-
-			// Add title to the News list
-			newsDiv.append(title);
-
-			// Add abstract after Title
-			var abstract = document.createElement('p')
-			abstract.textContent = news.results[i].abstract;
-			title.after(abstract);
-		}
+// Model (Fetch Data)
+var getArticles = function () {
+	sections.forEach(function (section) {
+		makeRequest(section);
 	});
-});
+};
+
+/**
+ * Make a request to the NYT API
+ * @param  {String} (section) The section to request articles from
+ * @return {Promise} The XHR request as a Promise
+ */
+var makeRequest = function (section) {
+	// NYT URL
+	var url = 'https://api.nytimes.com/svc/topstories/v2/' + section + '.json?api-key=' + apiKey;
+
+	// Create the XHR request
+	var xhr = new XMLHttpRequest();
+
+	xhr.onload = function () {
+		// Process the response
+		if (xhr.status >= 200 && xhr.status < 300) {
+			// If successful
+			renderSection(xhr, section);
+		}
+	};
+
+	// Setup out HTTP request
+	xhr.open('GET', url, true);
+
+	// Send the request
+	xhr.send()
+};
+
+// View (Render on a page)
+
+/**
+ * Render a section of articles
+ * @param  {Object} news The news data for the section
+ * @param  {String} sectionTitle    The title of the section
+ */
+var renderSection = function (news, sectionTitle) {
+	// console.log(JSON.parse(articles.responseText));
+	news = JSON.parse(news.responseText).results.slice(0, newsCount);
+	console.log(news);
+	var section = document.createElement('div');
+	section.id = 'section-' + sectionTitle;
+	section.innerHTML =
+		'<h2 class="title-case">' + sectionTitle + '</h2>' +
+		'<ol>' + renderArticles(news) +
+		'</ol>';
+	app.append(section);
+};
+
+/**
+ * Render article list elements from the articles object
+ * @param  {Object} news The news articles and article data
+ * @return {String}          The article markup as a string
+ */
+var renderArticles = function (news) {
+	var content = '';
+	news.forEach(function (newsArticle) {
+		content +=
+		'<li>' +
+			'<a href="' + sanitizeHTML(newsArticle.url) + '">' + sanitizeHTML(newsArticle.title) + '</a><br>' +
+			'<span class="text-muted text-small">' + sanitizeHTML(newsArticle.byline) + '</span><br>' +
+            '<span class="text-small">' + sanitizeHTML(newsArticle.abstract) + '</span>' +
+        '</li>';
+	});
+	return content;
+};
+
+// Init
+getArticles();
 
 </script>
 </body>

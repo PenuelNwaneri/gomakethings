@@ -34,6 +34,18 @@ var makeRequest = function (url, method, success, failure, always) {
 	xhr.send();
 };
 
+/*!
+ * Sanitize and encode all HTML in a user-submitted string
+ * (c) 2018 Chris Ferdinandi, MIT License, https://gomakethings.com
+ * @param  {String} str  The user-submitted string
+ * @return {String} str  The sanitized string
+ */
+var sanitizeHTML = function (str) {
+	var temp = document.createElement('div');
+	temp.textContent = str;
+	return temp.innerHTML;
+};
+
 /**
  * ChildNode.after() polyfill
  * Adapted from https://github.com/jserz/js_piece/blob/master/DOM/ChildNode/after()/after().md
