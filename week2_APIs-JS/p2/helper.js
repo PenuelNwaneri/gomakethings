@@ -18,7 +18,7 @@ var makeRequest = function (url, method, success, failure, always) {
 		} else {
 			// Run the failure callback
 			if (failure && typeof failure === 'function') {
-				failure(xhr);
+				failure(xhr); // Often no response text, therefore removed.
 			}
 		}
 
