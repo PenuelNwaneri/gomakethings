@@ -1,9 +1,9 @@
 // TASKS:
 // [DONE] How are you going to render the game markup?
 // [DONE] How will you figure out when someone has found all of the monsters?
-// What will you show when they win? What about when they lose?
-// Will you offer people a chance to play again? If so, how?
-
+// [DONE] What will you show when they win? What about when they lose?
+// [DONE]Will you offer people a chance to play again? If so, how?
+// After WINNING, the LAST click says you LOSE...
 
 // Variables (Controller)
 
@@ -24,6 +24,7 @@ var monsters = [
 ];
 var intro = document.querySelector('#intro');
 var app = document.querySelector('#app');
+var results = document.querySelector('#results');
 var playBtn = document.querySelector('#play');
 var winCount = 0; // Counter for winning clicks
 
@@ -36,14 +37,18 @@ var createDoors = function () {
     monsters.forEach(function() {
         app.append(renderSquare('door.svg'));
     });
+
+    // Reset Results Text & Button
+    results.textContent = '';
+    playBtn.style.visibility = 'hidden';
 };
 
 var playAgainScreen = function (text) {
-    var results = document.createElement('div');
     results.textContent = text;
-    results.className = 'results';
-    intro.after(results);
     playBtn.style.visibility = 'visible';
+    playBtn.addEventListener('click', function() {
+        createDoors();
+    })
 }
 
 var checkWinOrLose = function (square, index) {
