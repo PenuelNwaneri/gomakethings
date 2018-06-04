@@ -1,11 +1,9 @@
-// TASKS:
-// [DONE] How are you going to render the game markup?
-// [DONE] How will you figure out when someone has found all of the monsters?
-// [DONE] What will you show when they win? What about when they lose?
-// [DONE]Will you offer people a chance to play again? If so, how?
-// After WINNING, the LAST click says you LOSE...
+// IIFE to prevent exposing variables for cheaters. :)
+(function () {
 
-// Variables (Controller)
+/**
+ * Variables
+ */
 
 // The monsters and socks
 var monsters = [
@@ -22,60 +20,68 @@ var monsters = [
     'monster10.svg',
     'monster11.svg'
 ];
-var intro = document.querySelector('#intro');
+
 var app = document.querySelector('#app');
 var results = document.querySelector('#results');
 var playBtn = document.querySelector('#play');
-var winCount = 0; // Counter for winning clicks
 
-// Methods (Model)
+// Game status
+var inProgress; // Game is in progress or done (win or lost)
+var winCount; // Counter for winning clicks
+
+/**
+ * Methods
+ */
 
 // Iniitialize doors using length of 'monsters' list.
 var createDoors = function () {
-    shuffle(monsters); // Shuffle the monster list
-    app.textContent = '';
-    monsters.forEach(function() {
-        app.append(renderSquare('door.svg'));
-    });
+    shuffle(monsters);
+    app.textContent = ''; // Remove loading text
+    inProgress = true; // Let the games begin!
+    winCount = 0;
 
-    // Reset Results Text & Button
-    results.textContent = '';
-    playBtn.style.visibility = 'hidden';
+    var row = document.createElement('div');
+    row.className = 'row';
+    app.append(row);
+
+    monsters.forEach(function() {
+        row.append(renderSquare('door.svg'));
+    });
+    renderStatus('' || 0, false);
 };
 
 var playAgainScreen = function (text) {
-    results.textContent = text;
-    playBtn.style.visibility = 'visible';
+    renderStatus(text, true);
     playBtn.addEventListener('click', function() {
         createDoors();
     })
 }
 
 var checkWinOrLose = function (square, index) {
-    if (square.textContent === 'socks.svg') {
+    if (square === 'socks.svg' && inProgress === true) {
+        inProgress = false;
         playAgainScreen('You Lose!');
-        winCount = -1; // Make it impossible to win
-    } else {
+    } else if (inProgress === true){
         winCount++;
+        renderStatus(winCount, false);
     }
 
-    if (winCount === monsters.length - 1) {
+    if (winCount === monsters.length - 1 && inProgress === true) {
+        inProgress = false;
         playAgainScreen('You Win!');
     }
 }
 
 // Use this to match the click event.
 var showBehindDoor = function (e) {
-    console.log("clicked");
     var index = Array.from(e.target.parentNode.children).indexOf(e.target);
-    var targetSquare = app.children[index]; // Square that was clicked.
+    var row = document.querySelector('.row');
+    var targetSquare = row.children[index]; // Square that was clicked.
     var monsterBehindDoor = monsters[index]; // Matching monster in list.
 
     // Reveal Monster (or sock)
     targetSquare.setAttribute('style', `background-image: url(./images/${monsterBehindDoor})`);
-    targetSquare.textContent = monsterBehindDoor;
-    checkWinOrLose(targetSquare, index);
-
+    checkWinOrLose(monsterBehindDoor, index);
     targetSquare.removeEventListener('click', showBehindDoor); // Remove future clicks.
 }
 
@@ -84,20 +90,38 @@ var onClick = function (square) {
     square.addEventListener('click', showBehindDoor);
 }
 
-// Render (View)
+/**
+ * Render
+ */
+
 function renderSquare(square) {
     var grid = document.createElement('div');
     grid.className = "grid";
     grid.setAttribute('style', `background-image: url(./images/${square})`);
-    grid.textContent = square;
+    // grid.textContent = square;
     onClick(grid);
     return grid;
 }
 
-var row = document.createElement('div');
-row.className = 'row';
+function renderStatus(resultsText, showButton) {
+    // Reset Results Text & Button
+    if (showButton) {
+        playBtn.style.visibility = 'visible';
+    } else {
+        playBtn.style.visibility = 'hidden';
+    }
 
-// Initialize
+    if (inProgress) {
+        results.textContent = `You have ${(monsters.length - 1) - resultsText} monsters left to find!`;
+    } else {
+        results.textContent = resultsText
+    }
+}
+
+/**
+ * Initialize
+ */
 createDoors();
 
+})(document);
 
