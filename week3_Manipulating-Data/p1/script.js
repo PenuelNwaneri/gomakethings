@@ -5,13 +5,13 @@ var characterCount = document.querySelector('#character-count');
 
 // Methods (Model)
 text.addEventListener('input', function () {
-    var textNoSpaceCount = text.value.replace(/ /g,'').length;
-    var textWordCount = text.value.split(' ').
+    var textCharacterCount = text.value.replace(/[\n\r]+/g,'').length;
+    var textWordCount = text.value.split(/[\n\r\s]+/g).
         filter(function(text) {
             return text != ''
         })
         .length;
-    updateCount(textNoSpaceCount, textWordCount);
+    updateCount(textCharacterCount, textWordCount);
 })
 
 // Render (View)

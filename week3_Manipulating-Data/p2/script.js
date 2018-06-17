@@ -81,7 +81,11 @@ var showBehindDoor = function (e) {
 
     // Reveal Monster (or sock)
     targetSquare.setAttribute('style', `background-image: url(./images/${monsterBehindDoor})`);
+
+    // TODO: What does this do?
     checkWinOrLose(monsterBehindDoor, index);
+
+    // TODO: More description
     targetSquare.removeEventListener('click', showBehindDoor); // Remove future clicks.
 }
 
@@ -103,6 +107,7 @@ function renderSquare(square) {
     return grid;
 }
 
+// Play Again button
 function renderStatus(resultsText, showButton) {
     // Reset Results Text & Button
     if (showButton) {
