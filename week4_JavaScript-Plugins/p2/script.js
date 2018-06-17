@@ -99,3 +99,8 @@ weather.init();
 //    tempUnit: 'F',
 //    showIcon: false,
 // })
+
+/*
+ * Question for Chris: What is the advatnage of delinking tab and content relationship?
+ *
+ * /
