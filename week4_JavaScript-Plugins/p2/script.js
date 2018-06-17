@@ -52,6 +52,8 @@ var weather = ( function () {
     function showOutputOnError(data, xhr) {
         console.error(data);
         console.error(xhr);
+        var app = document.querySelector('#app');
+        app.innerHTML = "Something went wrong...SORRY!";
     }
 
     // 'tempUnit' is the unit of the input temp
