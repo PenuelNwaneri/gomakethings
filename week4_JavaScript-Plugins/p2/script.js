@@ -103,4 +103,4 @@ weather.init();
 /*
  * Question for Chris: What is the advatnage of delinking tab and content relationship?
  *
- * /
+ */
