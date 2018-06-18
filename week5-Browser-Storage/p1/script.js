@@ -54,18 +54,24 @@ function renderProgressBar () {
 }
 
 function updateProgressBar (id, value) {
-    // Get sessionStorage in Array format
+    // Get 'id' passed from the saveInput event to remove styling
+    var progressItem = document.querySelector(`[${id}]`);
+    var progressItemInput = document.querySelector(`#${id}`);
+
+    // Get sessionStorage to apply colors to progress items
     var savedInputs = Object.keys(sessionStorage);
     console.log(savedInputs);
 
     savedInputs.forEach( function(input) {
         if (!document.querySelector(`[${input}]`)) return;
         document.querySelector(`[${input}]`).classList.add('filled');
-    });
 
-    var progressItem = document.querySelector(`[${id}]`);
+        if (!document.querySelector(`#${input}`)) return;
+        document.querySelector(`#${input}`).style = 'background-color: none';
+    });
     if (id && !value) {
         progressItem.classList.remove('filled');
+        progressItemInput.style.backgroundColor = 'lightgoldenrodyellow';
     }
 }
 
@@ -82,12 +88,8 @@ function saveInput (event) {
     // If value exists, store value inside sessionStorage and flag as 'required="complete"'
     if (inputValue) {
         requiredInput.value = 'complete'; // Give 'required' attribute value of 'complete'
-        if (event.target.type != 'password') {  // Store values for NON-PASSWORD.
-            sessionStorage.setItem(inputId, inputValue);
-            console.log("something");
-        } else {
-            sessionStorage.setItem(inputId, ''); // Store a blank value for passwords
-        }
+        sessionStorage.setItem(inputId, inputValue);
+        console.log("something");
     } else {
         requiredInput.value = ''; // Remove 'required' attribute value
         sessionStorage.removeItem(inputId);

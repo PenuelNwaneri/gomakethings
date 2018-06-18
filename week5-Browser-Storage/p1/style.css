@@ -86,10 +86,13 @@ label {
 .progress-item {
     background-color: white;
     text-align: center;
+    background-color: lightgoldenrodyellow;
+    border-bottom: 2px solid orange;
 }
 
 .progress-item.filled {
     background-color: green;
+    border-bottom: 2px solid darkgreen;
 }
 
 .top {
