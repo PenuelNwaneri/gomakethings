@@ -3,18 +3,6 @@
 // Shows how much of the form the user has completed.
 // On the last page, use the form data from browser storage to provide a summary of the data they provided.
 
-// TODO:
-// 1. Collect the number of fields (all required, unless indicated)
-// 1. username
-// 2. password
-// 3. name
-// 4. street1
-// 5. street2 (optional)
-// 6. city
-// 7. state
-// 8. zipcode
-// 9. country
-
 function init () {
     updateFieldsFromStorage();
     renderProgressBar();

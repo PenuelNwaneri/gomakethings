@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>Shopping Filters</title>
+
+	<meta charset="utf-8">
+
+	<!-- Force latest available IE rendering engine and Chrome Frame (if installed) -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<!-- Mobile Screen Resizing -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<style type="text/css">
+		/**
+		 * Add box sizing to everything
+		 * @link http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+		 */
+		/* line 38, src/sass/components/_normalize.scss */
+		*,
+		*:before,
+		*:after {
+			box-sizing: border-box;
+		}
+
+		/**
+		 * Layout
+		 */
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+			font-size: 112.5%;
+			margin-left: auto;
+			margin-right: auto;
+			max-width: 80em;
+			width: 88%;
+		}
+
+		.row {
+			margin-left: -1.4%;
+			margin-right: -1.4%;
+		}
+
+		.grid-fourth,
+		.grid-third,
+		.grid-two-thirds,
+		.grid-three-fourths {
+			float: left;
+			padding-left: 1.4%;
+			padding-right: 1.4%;
+			width: 100%;
+		}
+
+		.grid-third {
+			margin-bottom: 0.5em;
+		}
+
+		@media (min-width: 40em) {
+			.grid-fourth {
+				width: 25%;
+			}
+
+			.grid-third {
+				width: 33.33333%;
+			}
+
+			.grid-two-thirds {
+				width: 66.66666%;
+			}
+
+			.grid-three-fourths {
+				width: 75%;
+			}
+		}
+
+		.row:before,
+		.row:after {
+			display: table;
+			content: " ";
+		}
+
+		.row:after {
+			clear: both;
+		}
+
+		/**
+		 * Responsive Images
+		 */
+
+		img {
+			height: auto;
+			max-width: 100%;
+		}
+
+		/**
+		 * Forms
+		 */
+
+		label {
+			display: block;
+			width: 100%;
+		}
+
+		/**
+		 * Utilities
+		 */
+		.font-big {
+			font-size: 1.2em;
+		}
+
+		.padding {
+			padding: 0.5em 0;
+		}
+
+		.text-center {
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>Shopping Filters</h1>
+
+	<div class="row">
+
+		<div id="filter" class="grid-fourth">
+			<h2>Filter</h2>
+
+			<h3>Type</h3>
+
+			<div>
+				<label>
+					<input type="checkbox" class="filter-type" name="shirts" checked>
+					Shirts
+				</label>
+				<label>
+					<input type="checkbox" class="filter-type" name="hats" checked>
+					Hats
+				</label>
+				<label>
+					<input type="checkbox" class="filter-type" name="shoes" checked>
+					Shoes
+				</label>
+			</div>
+
+			<h3>For</h3>
+
+			<div>
+				<label>
+					<input type="checkbox" class="filter-for" name="men" checked>
+					Men
+				</label>
+				<label>
+					<input type="checkbox" class="filter-for" name="women" checked>
+					Women
+				</label>
+				<label>
+					<input type="checkbox" class="filter-for" name="both" checked>
+					Unisex
+				</label>
+			</div>
+
+			<h3>Weather</h3>
+
+			<div>
+				<label>
+					<input type="checkbox" class="filter-weather" name="warm" checked>
+					Warm
+				</label>
+				<label>
+					<input type="checkbox" class="filter-weather" name="cold" checked>
+					Cold
+				</label>
+				<label>
+					<input type="checkbox" class="filter-weather" name="in-between" checked>
+					In-between
+				</label>
+			</div>
+		</div>
+
+		<div class="grid-three-fourths">
+			<div class="row">
+				<div class="grid-third item-type-shirt item-for-both item-weather-warm">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-shirt item-for-men item-weather-cold">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1483656166969-b06816dfb1a0?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-shoes item-for-both item-weather-in-between">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1465428792730-f80a9aa81540?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-shirt item-for-both item-weather-warm">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1503341733017-1901578f9f1e?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-shoes item-for-men item-weather-cold">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1504615028257-b1b7492d0ea7?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-shoes item-for-both item-weather-warm">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-hat item-for-women item-weather-warm">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1467612867072-33a49742b5e4?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-hat item-for-women item-weather-warm">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1506157446808-e8590bfc081e?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-shoes item-for-women item-weather-warm">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1512921929709-6f1ff6aca605?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-shirt item-for-both item-weather-in-between">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1496153882250-348cd477af7e?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-hat item-for-both item-weather-cold">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1510965666526-511a39febf67?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-hat item-for-women item-weather-warm">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1495556281896-46ef1eed55f6?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-shirt item-for-both item-weather-warm">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1513337553165-e79341fd6d46?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-hat item-for-both item-weather-cold">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1517423568366-8b83523034fd?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+				<div class="grid-third item-type-shirt item-for-both item-weather-cold">
+					<a href="product-details.html"><img src="https://images.unsplash.com/photo-1512445239398-6d0c4c575b89?auto=format&fit=crop&w=350&h=350&q=80"></a>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script src="script.js"></script>
+
+</body>
+</html>
