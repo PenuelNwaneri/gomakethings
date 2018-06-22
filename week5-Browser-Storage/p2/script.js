@@ -1,6 +1,3 @@
-// When JS fires, make sure that you can still see all pictures.
-// Revealing pattern.
-
 (function () {
     'use strict';
 
@@ -42,9 +39,12 @@
                 // Input type and className check
                 if (e.target.type !== 'checkbox' && !e.target.className.indexOf('filter-')) return;
 
+                // Send to details page on click:
+                // Save in storage
+
                 // Save and apply filters
-                this.save(e.target);
                 this.apply(e.target);
+                this.save(e.target);
             }.bind(this), false);
         },
 
@@ -84,15 +84,12 @@
                 };
                 this.apply(checkbox);
             }.bind(this))
-
-
         },
 
         // Apply filter to images
         apply: function (checkbox) {
             console.log('(apply) applying to pics...');
 
-            console.log(checkbox);
             var category = checkbox.className.split('-')[1];
             var subCategory = checkbox.name;
 
@@ -136,13 +133,12 @@
             console.log('(storage) storing in localStorage...');
             localStorage.setItem('filterOptions', JSON.stringify(filterOptions));
             console.log('--- saved in storage ---')
-        }
+        },
     }
 
     App.init(); // Initialize
     console.log('--- initialization complete ---');
 })()
 
-// TODO:
-// 1. How to fix the flash of checkboxes?
-// 2.
+// QUESTION:
+// 1. Make the filters rules applicable to multi-attributed pictures.
