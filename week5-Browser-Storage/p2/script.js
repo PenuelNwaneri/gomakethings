@@ -43,9 +43,8 @@
                 if (e.target.type !== 'checkbox' && !e.target.className.indexOf('filter-')) return;
 
                 // Save and apply filters
-                this.apply(e.target);
                 this.save(e.target);
-
+                this.apply(e.target);
             }.bind(this), false);
         },
 
@@ -72,6 +71,7 @@
 
             // Target checkboxes
             var checkboxes = filter.querySelectorAll('[class^="filter-"]');
+            if (!checkboxes) return;
 
             // Loop through checkboxes and check against the local 'filterOptions' object.
             checkboxes.forEach( function (checkbox) {
@@ -82,13 +82,36 @@
                 if (checkbox.checked !== filterOptions[category][subCategory]) {
                     checkbox.checked = !checkbox.checked;
                 };
-            })
+                this.apply(checkbox);
+            }.bind(this))
+
+
         },
 
         // Apply filter to images
         apply: function (checkbox) {
             console.log('(apply) applying to pics...');
+
             console.log(checkbox);
+            var category = checkbox.className.split('-')[1];
+            var subCategory = checkbox.name;
+
+            // If plural, remove the 's'. There is a discrepancy between the classNames and the associated filter category name.
+            if (subCategory.slice(-1) === 's') {
+                subCategory = subCategory.slice(0, -1);
+            }
+
+            // Using CSS select for *wildcard match to select the pictures.
+            var targetPics = document.querySelectorAll(`[class*="item-${category}-${subCategory}"]`);
+
+            // If NOt checked, hide, else show.
+            targetPics.forEach( function (pics) {
+                if (!checkbox.checked) {
+                    pics.style.display = 'none';
+                } else {
+                    pics.style.display = 'block';
+                }
+            })
         },
 
         // Save filters to local object - 'filterOptions'
@@ -111,14 +134,13 @@
         // Save filters to localStorage
         storage: function () {
             console.log('(storage) storing in localStorage...');
-            console.log(filterOptions);
             localStorage.setItem('filterOptions', JSON.stringify(filterOptions));
+            console.log('--- saved in storage ---')
         }
-
     }
 
     App.init(); // Initialize
-    console.log('------');
+    console.log('--- initialization complete ---');
 })()
 
 // TODO:
